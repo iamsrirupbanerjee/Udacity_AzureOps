@@ -60,13 +60,18 @@ resource "azurerm_network_interface" "main" {
   name                = "${var.prefix}-nic-${count.index}"
   resource_group_name = data.azurerm_resource_group.main.name
   location            = data.azurerm_resource_group.main.location
-  network_security_group_id = azurerm_network_security_group.main.id
 
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.internal.id
     private_ip_address_allocation = "Dynamic"
   }
+}
+
+resource "azurerm_network_interface_security_group_association" "main" {
+  count                     = var.vm_counter
+  network_interface_id      = azurerm_network_interface.main[count.index].id
+  network_security_group_id = azurerm_network_security_group.main.id
 }
 
 resource "azurerm_public_ip" "main" {
@@ -91,7 +96,6 @@ resource "azurerm_lb" "main" {
 
 resource "azurerm_lb_backend_address_pool" "main" {
   name                = "BackendPool"
-  resource_group_name = data.azurerm_resource_group.main.name
   loadbalancer_id     = azurerm_lb.main.id
 }
 
