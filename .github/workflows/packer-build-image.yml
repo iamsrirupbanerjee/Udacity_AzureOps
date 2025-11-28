@@ -36,5 +36,9 @@ jobs:
           echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
 
       # Validate Packer template
+      - name: Initialize Packer Template
+        run: packer init server.json
+        
+      # Validate Packer template
       - name: Validate Packer Template
         run: packer validate server.json
