@@ -17,7 +17,9 @@ For this project, you will write a Packer template and a Terraform template to d
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Instructions
-**Your words here**
+For policy definition - az policy definition create --name "UntaggedResourcePolicy" --display-name "Deny resources with no tags" --description "This policy denies creation of all resources that have not been tagged." --rules deny-untagged-resource-policy-rule.json --mode "All" --version "1.0.0"
+
+az policy assignment create --policy UntaggedResourcePolicy
 
 ### Output
 **Your words here**
