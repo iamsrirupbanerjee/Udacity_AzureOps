@@ -51,7 +51,9 @@ build {
   provisioner "shell" {
     inline = [
       "echo 'Hello, World!' > index.html",
-      "nohup busybox httpd -f -p 80 &"
+      "nohup busybox httpd -f -p 80 < /dev/null > /dev/null 2>&1 &",
+	  "disown -a",
+	  "sleep 1"
     ]
     inline_shebang = "/bin/sh -x"
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
