@@ -30,9 +30,18 @@ Refer to the policy_screenshots dirctory for the images.
 
 This resulted in successful run of the Github actions and the image was created successfully in the Azure account. Refer to the packer_screenshots dirctory for the images.
 
+3. Terraform - The Terraform scripts are main.tf and vars.tf. Next the Colud sheel was used to run terraform init, validate, plan and apply to create the resources. Later terraform destroy was used to delete the resources.
 
+Refer to the terraform_screenshots dirctory for the images.
 
+The terraform vars.tf file can be used to customize the terraform build. All these are input to the terraform process. For example - 
+* prefix - I used srirup-web to add prefix to the resources. It can be epanded to use various env specific versions.
+* location - I used northeurope as the location. This creates all the resources in Europe North and can use the packer image also in northeurope.
+* admin_username & admin_password - Used to setup the connection credentials to the VMs
+* vm_counter - The default value used is 2. It can be made generic so that the number of VMs created can be controlled.
+
+Additionally a terraform .tfvars file can be made to set these values for various environments.
 
 ### Output
-**Your words here***
+The Terraform output is in solution.plan file.
 
