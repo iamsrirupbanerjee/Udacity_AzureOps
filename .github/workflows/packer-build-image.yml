@@ -37,4 +37,4 @@ jobs:
 
       # Validate Packer template
       - name: Validate Packer Template
-        run: packer --version
+        run: packer validate server.json
