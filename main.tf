@@ -133,7 +133,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
-	managed_disk_id = data.azurerm_image.packer_image.id
+	id = data.azurerm_image.packer_image.id
   }
 }
 
