@@ -22,5 +22,5 @@ For policy definition - az policy definition create --name "UntaggedResourcePoli
 az policy assignment create --policy UntaggedResourcePolicy
 
 ### Output
-**Your words here**
+**Your words here***
 
