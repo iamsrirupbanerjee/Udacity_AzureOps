@@ -15,7 +15,7 @@ data "azurerm_resource_group" "main" {
 resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
   address_space       = ["10.0.0.0/22"]
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
 }
 
@@ -28,7 +28,7 @@ resource "azurerm_subnet" "internal" {
 
 resource "azurerm_network_security_group" "main" {
   name                = "${var.prefix}-nsg"
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
 
   security_rule {
@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "main" {
   count               = var.vm_counter
   name                = "${var.prefix}-nic-${count.index}"
   resource_group_name = data.azurerm_resource_group.main.name
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
 
   ip_configuration {
     name                          = "internal"
@@ -77,7 +77,7 @@ resource "azurerm_network_interface_security_group_association" "main" {
 
 resource "azurerm_public_ip" "main" {
   name                = "${var.prefix}-pub-ip"
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
   allocation_method   = "Static"
   sku                 = "Standard"
@@ -85,7 +85,7 @@ resource "azurerm_public_ip" "main" {
 
 resource "azurerm_lb" "main" {
   name                = "${var.prefix}-lb"
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
   sku                 = "Standard"
 
@@ -109,7 +109,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "main" {
 
 resource "azurerm_availability_set" "main" {
   name                = "${var.prefix}-avset"
-  location            = data.azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
   platform_fault_domain_count  = 2
   platform_update_domain_count = 2
@@ -120,7 +120,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   count = var.vm_counter
   name                            = "${var.prefix}-vm-${count.index}"
   resource_group_name             = data.azurerm_resource_group.main.name
-  location                        = data.azurerm_resource_group.main.location
+  location                        = var.location
   size                            = "Standard_D2s_v3"
   admin_username = var.admin_username
   admin_password = var.admin_password
