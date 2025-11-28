@@ -28,8 +28,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       # Create resource group
-      - name: Create Resource group
-        run: az group create --name rg-packer-image --location northeurope
+      #- name: Create Resource group
+      #  run: az group create --name rg-packer-image --location northeurope
 
       # Export environment variables for Packer
       - name: Set Packer Environment Variables
