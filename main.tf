@@ -126,13 +126,10 @@ resource "azurerm_linux_virtual_machine" "main" {
     azurerm_network_interface.main[count.index].id,
   ]
 
-  source_image_reference {
-    id = data.azurerm_image.packer_image.id
-  }
-
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
+	image_uri = data.azurerm_image.packer_image.id
   }
 }
 
