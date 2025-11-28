@@ -1,4 +1,12 @@
 # server.pkr.hcl
+packer {
+  required_plugins {
+    azure = {
+      source  = "github.com/hashicorp/azure"
+      version = "~> 1.0"
+    }
+  }
+}
 
 variable "client_id" {
   type = string
