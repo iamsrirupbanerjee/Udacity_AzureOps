@@ -26,6 +26,10 @@ jobs:
         with:
           auth-type: SERVICE_PRINCIPAL
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      # Create resource group
+      - name: Create Resource group
+        run: az group create --name rg-packer-image --location northeurope
 
       # Export environment variables for Packer
       - name: Set Packer Environment Variables
