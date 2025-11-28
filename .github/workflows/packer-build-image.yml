@@ -35,10 +35,6 @@ jobs:
           echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
           echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
 
-      # Initialize Packer template
+      # Build Packer template
       - name: Initialize Packer Template
-        run: packer init server.pkr.hcl
-        
-      # Validate Packer template
-      - name: Validate Packer Template
-        run: packer validate server.pkr.hcl
+        run: packer build server.pkr.hcl
