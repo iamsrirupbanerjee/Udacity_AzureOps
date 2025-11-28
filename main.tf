@@ -9,7 +9,7 @@ data "azurerm_image" "packer_image" {
 }
 
 data "azurerm_resource_group" "main" {
-  name     = "udacity-azureops-resources"
+  name     = "Azuredevops"
 }
 
 resource "azurerm_virtual_network" "main" {
