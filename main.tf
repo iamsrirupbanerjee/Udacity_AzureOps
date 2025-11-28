@@ -122,11 +122,21 @@ resource "azurerm_linux_virtual_machine" "main" {
   resource_group_name             = data.azurerm_resource_group.main.name
   location                        = data.azurerm_resource_group.main.location
   size                            = "Standard_D2s_v3"
-  availability_set_id             = azurerm_availability_set.main.id
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+  disable_password_authentication = false
+  
+  source_image_id = data.azurerm_image.packer_image.id
   availability_set_id = azurerm_availability_set.main.id
   
   network_interface_ids = [
     azurerm_network_interface.main[count.index].id,
   ]
+  
+  os_disk {
+    storage_account_type = "Standard_LRS"
+    caching              = "ReadWrite"
+  }
+
 }
 
