@@ -129,11 +129,12 @@ resource "azurerm_linux_virtual_machine" "main" {
   network_interface_ids = [
     azurerm_network_interface.main[count.index].id,
   ]
+  
+  os_managed_disk_id = data.azurerm_image.packer_image.id
 
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
-	id = data.azurerm_image.packer_image.id
   }
 }
 
