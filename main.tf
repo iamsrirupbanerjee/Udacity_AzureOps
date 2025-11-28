@@ -1,5 +1,6 @@
 provider "azurerm" {
   features {}
+  subscription_id = "e85c2d28-e9aa-4775-85de-521be630b9fa"
 }
 
 data "azurerm_image" "packer_image" {
