@@ -44,6 +44,19 @@ resource "azurerm_network_security_group" "main" {
     destination_port_range     = "*"
   }
   
+  # Allow Inbound HTTP Traffic from the Internet on Port 80
+  #security_rule {
+  #  name                       = "AllowHTTPFromInternet"
+  #  priority                   = 110
+  #  direction                  = "Inbound"
+  #  access                     = "Allow"
+  #  protocol                   = "Tcp"
+  #  source_address_prefix      = "Internet"
+  #  destination_address_prefix = "*"
+  #  source_port_range          = "*"
+  #  destination_port_range     = "80"
+  #}
+  
   # Allow traffic within the Same Virtual Network - Inbound
   security_rule {
     name                       = "AllowVnetInbound"
@@ -152,6 +165,11 @@ resource "azurerm_network_interface_backend_address_pool_association" "main" {
   network_interface_id    = azurerm_network_interface.main[count.index].id
   ip_configuration_name   = "internal"
   backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "internal" {
+  subnet_id                 = azurerm_subnet.internal.id
+  network_security_group_id = azurerm_network_security_group.main.id
 }
 
 resource "azurerm_availability_set" "main" {
