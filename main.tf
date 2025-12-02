@@ -129,6 +129,24 @@ resource "azurerm_lb_backend_address_pool" "main" {
   loadbalancer_id     = azurerm_lb.main.id
 }
 
+resource "azurerm_lb_probe" "http_probe" {
+  name                = "${var.prefix}-http-probe"
+  loadbalancer_id     = azurerm_lb.main.id
+  protocol            = "Tcp"
+  port                = 80
+}
+
+resource "azurerm_lb_rule" "http_rule" {
+  name                           = "${var.prefix}-http-rule"
+  loadbalancer_id                = azurerm_lb.main.id
+  protocol                       = "Tcp"
+  frontend_port                  = 80
+  backend_port                   = 80
+  frontend_ip_configuration_name = azurerm_lb.main.frontend_ip_configuration[0].name
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.main.id
+  probe_id                       = azurerm_lb_probe.http_probe.id
+}
+
 resource "azurerm_network_interface_backend_address_pool_association" "main" {
   count                   = var.vm_counter
   network_interface_id    = azurerm_network_interface.main[count.index].id
