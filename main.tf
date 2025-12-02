@@ -77,7 +77,6 @@ resource "azurerm_network_security_group" "main" {
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_address_prefix      = azurerm_lb.main.frontend_ip_configuration[0].private_ip_address
     source_address_prefix      = "AzureLoadBalancer"
     destination_address_prefix = "*"
     source_port_range          = "*"
