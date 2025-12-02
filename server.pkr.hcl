@@ -61,7 +61,7 @@ build {
       "echo 'Restart=always' >> http.service",
       "echo 'RestartSec=1' >> http.service",
       "echo 'User=packer' >> http.service",
-      "echo 'ExecStart=/usr/bin/nohup /bin/busybox httpd -f -p 8080 -h /home/packer' >> http.service",
+      "echo 'ExecStart=/usr/bin/nohup /bin/busybox httpd -f -p 80 -h /home/packer' >> http.service",
       "echo '[Install]' >> http.service",
       "echo 'WantedBy=multi-user.target' >> http.service",
       "sudo mv http.service /etc/systemd/system",

@@ -25,5 +25,5 @@ variable "admin_password" {
 variable "vm_counter" {
   description = "The nmber of VMs to create"
   type    = number
-  default = 2
+  default = 1
 }
