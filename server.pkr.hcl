@@ -38,7 +38,7 @@ source "azure-arm" "ubuntu" {
   image_publisher             = "Canonical"
   image_offer                 = "UbuntuServer"
   image_sku                   = "18.04-LTS"
-  managed_image_resource_group_name = "rg-packer-image"
+  managed_image_resource_group_name = "Azuredevops"
   managed_image_name          = "udacity-packager-image-v1"
   location                    = "northeurope"
   vm_size                     = "Standard_B1s"
@@ -50,8 +50,26 @@ build {
 
   provisioner "shell" {
     inline = [
-      "echo 'Hello, World!' > index.html",
-      "nohup busybox httpd -f -p 80 &"
+	  "sudo mkdir -p /var/www/html",
+	  "sudo echo 'Hello, World!' > /var/www/html/index.html",
+      "echo '[Unit]' > http.service",
+      "echo 'Description=HTTP Hello World' >> http.service",
+      "echo 'After=network.target' >> http.service",
+      "echo 'StartLimitIntervalSec=0' >> http.service",
+      "echo '[Service]' >> http.service",
+      "echo 'Type=simple' >> http.service",
+      "echo 'Restart=always' >> http.service",
+      "echo 'RestartSec=1' >> http.service",
+      "echo 'User=packer' >> http.service",
+      "echo 'ExecStart=/usr/bin/nohup /bin/busybox httpd -f -p 8080 -h /home/packer' >> http.service",
+      "echo '[Install]' >> http.service",
+      "echo 'WantedBy=multi-user.target' >> http.service",
+      "sudo mv http.service /etc/systemd/system",
+      "sudo chown root:root /etc/systemd/system/http.service",
+      "sudo chmod 755 /etc/systemd/system/http.service",
+	  "sudo systemctl daemon-reload",
+      "sudo systemctl enable http",
+	  "sudo systemctl start http"
     ]
     inline_shebang = "/bin/sh -x"
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"

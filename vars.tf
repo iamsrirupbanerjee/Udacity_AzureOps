@@ -1,9 +1,17 @@
+variable "project_name" {
+  description = "The name of the project for tagging"
+}
+
 variable "prefix" {
   description = "The prefix which should be used for all resources in this example"
 }
 
 variable "location" {
   description = "The Azure Region in which all resources in this example should be created."
+}
+
+variable "environ" {
+  description = "The environment to use, for example Dev, Test, Prod"
 }
 
 variable "admin_username" {

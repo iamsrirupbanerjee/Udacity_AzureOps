@@ -5,7 +5,7 @@ provider "azurerm" {
 
 data "azurerm_image" "packer_image" {
   name                = "udacity-packager-image-v1"
-  resource_group_name = "rg-packer-image"
+  resource_group_name = "Azuredevops"
 }
 
 data "azurerm_resource_group" "main" {
@@ -31,21 +31,10 @@ resource "azurerm_network_security_group" "main" {
   location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
 
+  # Deny Inbound Traffic from the Internet
   security_rule {
-    name                       = "AllowInternalAccess"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_address_prefix      = "10.0.0.0/22"
-    destination_address_prefix = "10.0.0.0/22"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-  }
-
-  security_rule {
-    name                       = "DenyInternetAccess"
-    priority                   = 200
+    name                       = "DenyInternetInbound"
+    priority                   = 4096
     direction                  = "Inbound"
     access                     = "Deny"
     protocol                   = "*"
@@ -54,6 +43,47 @@ resource "azurerm_network_security_group" "main" {
     source_port_range          = "*"
     destination_port_range     = "*"
   }
+  
+  # Allow traffic within the Same Virtual Network - Inbound
+  security_rule {
+    name                       = "AllowVnetInbound"
+    priority                   = 200
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_address_prefix      = "VirtualNetwork"
+    destination_address_prefix = "VirtualNetwork"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+  }
+  
+  # Allow traffic within the Same Virtual Network - Outbound
+  security_rule {
+    name                       = "AllowVnetOutbound"
+    priority                   = 300
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_address_prefix      = "VirtualNetwork"
+    destination_address_prefix = "VirtualNetwork"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+  }
+  
+  # Allow HTTP Traffic from the Load Balancer to the VMs
+  security_rule {
+    name                       = "AllowLBHTTPInbound"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_address_prefix      = azurerm_lb.main.frontend_ip_configuration[0].private_ip_address
+    source_address_prefix      = "AzureLoadBalancer"
+    destination_address_prefix = "*"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+  }
+  
 }
 
 resource "azurerm_network_interface" "main" {
@@ -136,6 +166,11 @@ resource "azurerm_linux_virtual_machine" "main" {
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
+  }
+  
+  tags = {
+    Environment = var.environ
+    Project     = var.project_name
   }
 
 }
