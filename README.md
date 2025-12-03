@@ -27,7 +27,7 @@ Refer to the policy_screenshots dirctory for the images.
 * Added the Azure Lab creadentials (client-id, client-secret,subscription-id,tenant-id) in repository secrets.
 * .github\workflows\packer-build-image.yml - the action file containing the steps to make the image using Github
 * server.json and server.pkr.hcl - While running in Github actions, it complained about packer plugin only using HCL2 format insteda of JSON. Hence I made a hcl version of the server.json file.
-Update - 03/12/2025 - 
+# Update - 03/12/2025 - 
 * The packer script has been updated to use "Azuredevops" resource group, similar to Terraform.
 * The shell provisioning has been changed to create the index.html file and run busybox httpd as a system service in Ubuntu. This ensures that when a VM is created from the image, a httpd service is spawned which servers the index.html file.
 
@@ -42,7 +42,7 @@ The terraform vars.tf file can be used to customize the terraform build. All the
 * location -  This is a configurable location to determine where the resources should be. I used northeurope as the location. This creates all the resources in Europe North and can use the packer image also in northeurope.
 * admin_username & admin_password - Used to setup the connection credentials to the VMs.
 * vm_counter - The default value used is 2. It can be made generic so that the number of VMs created can be controlled.
-Update - 03/12/2025 - 
+# Update - 03/12/2025 - 
 * project_name - This is a configurable project name which can be tagged on the VMs. I used AzureOps.
 * environ - This is a configurable environ to use for dev or test or prod. I used dev. Tags on the VM.
 
@@ -51,6 +51,6 @@ Update - 03/12/2025 -
 Additionally a terraform .tfvars file can be made to set these values for various environments.
 
 ### Output
-Update - 03/12/2025 - 
+# Update - 03/12/2025 - 
 The Terraform output is in solution.plan file. Additional screenshots have been added in to show the resources, the app can be accessed and VMs tagged. Refer to the terraform_screenshots dirctory for the images.
 
