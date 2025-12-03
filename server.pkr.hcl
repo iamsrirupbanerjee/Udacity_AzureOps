@@ -1,4 +1,4 @@
-# server.pkr.hcl
+#  server.pkr.hcl
 packer {
   required_plugins {
     azure = {
