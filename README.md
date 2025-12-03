@@ -42,10 +42,10 @@ The terraform vars.tf file can be used to customize the terraform build. All the
 * location -  This is a configurable location to determine where the resources should be. I used northeurope as the location. This creates all the resources in Europe North and can use the packer image also in northeurope.
 * admin_username & admin_password - Used to setup the connection credentials to the VMs.
 * vm_counter - The default value used is 2. It can be made generic so that the number of VMs created can be controlled.
-
 Update - 03/12/2025 - 
 * project_name - This is a configurable project name which can be tagged on the VMs. I used AzureOps.
 * environ - This is a configurable environ to use for dev or test or prod. I used dev. Tags on the VM.
+
 * Changes were made in the Terraform main.tf script to define all the NSG rules for inbound and outbound traffic. An additional rule, called "AllowHTTPFromInternet" was introduced which allows HTTP traffic via LB to the VMs and access the "Hello World" app. I have commented it out for now.
 
 Additionally a terraform .tfvars file can be made to set these values for various environments.
