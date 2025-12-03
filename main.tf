@@ -45,17 +45,17 @@ resource "azurerm_network_security_group" "main" {
   }
   
   # Allow Inbound HTTP Traffic from the Internet on Port 80
-  #security_rule {
-  #  name                       = "AllowHTTPFromInternet"
-  #  priority                   = 110
-  #  direction                  = "Inbound"
-  #  access                     = "Allow"
-  #  protocol                   = "Tcp"
-  #  source_address_prefix      = "Internet"
-  #  destination_address_prefix = "*"
-  #  source_port_range          = "*"
-  #  destination_port_range     = "80"
-  #}
+  security_rule {
+    name                       = "AllowHTTPFromInternet"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+  }
   
   # Allow traffic within the Same Virtual Network - Inbound
   security_rule {
