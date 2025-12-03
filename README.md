@@ -51,5 +51,6 @@ Update - 03/12/2025 -
 Additionally a terraform .tfvars file can be made to set these values for various environments.
 
 ### Output
-The Terraform output is in solution.plan file.
+Update - 03/12/2025 - 
+The Terraform output is in solution.plan file. Additional screenshots have been added in to show the resources, the app can be accessed and VMs tagged. Refer to the terraform_screenshots dirctory for the images.
 
